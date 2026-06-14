@@ -47,10 +47,12 @@ jobs:
           # add an (also free) GITLEAKS_LICENSE secret.
 
   build-skill-artifact:
-    name: Build skill artifact
+    name: Build & release skill artifact
     needs: gate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write          # publish the rolling 'latest' release
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,3 +72,15 @@ jobs:
           path: dist/jira-card.zip
           if-no-files-found: error
           retention-days: 90
+
+      - name: Publish rolling 'latest' release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest skill build
+          make_latest: true
+          files: dist/jira-card.zip
+          body: |
+            Auto-built on every push to `main`. Download and upload to
+            Claude.ai → Skills:
+            https://github.com/ccyrene/jira-card-skills/releases/latest/download/jira-card.zip
