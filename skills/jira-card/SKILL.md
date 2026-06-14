@@ -59,6 +59,11 @@ example instance IDs: `reference/profile-example.md`.
   ("unknown field", "invalid transition"), refresh via `reference/setup.md` —
   don't guess IDs.
 - Cards are written for engineers, in the config's `conventions.summaryStyle`.
+- **MCP cost hygiene.** Every Jira read passes only the `fields` it needs (never
+  the default set — omit `description` unless the step uses it), a tight
+  `maxResults`, and `responseContentFormat: "markdown"`. Resolve `accountId`,
+  sprint id, and config once per run and reuse them; never `getJiraIssue` right
+  after an `editJiraIssue` (the edit already echoes the issue).
 
 ## When NOT to use
 
