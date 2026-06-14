@@ -1,0 +1,1 @@
+Create a Jira card from one sentence — board, sprint, due date, points and priority auto-resolved; ask only when unclear. Also backfill from commits, implement, browse, setup, list.

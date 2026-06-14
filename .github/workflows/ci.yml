@@ -1,0 +1,72 @@
+name: CI
+
+# Prompt-safety gate on every PR and push; on push to main, also build the
+# uploadable skill artifact (the same jira-card.zip you'd drop into Claude.ai).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Least privilege: jobs only need to read the repo. (gitleaks uses GITHUB_TOKEN
+# only to annotate; no write scopes are granted.)
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: Prompt-safety gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history so gitleaks can scan commits
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Skill prompt-safety & structure gate
+        run: python3 scripts/skill_gate.py
+
+      - name: Self-test the gate (proves it catches a planted danger)
+        run: python3 scripts/skill_gate_selftest.py
+
+      - name: Secret scan (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Free for individual/public repos. For an org-owned private repo,
+          # add an (also free) GITLEAKS_LICENSE secret.
+
+  build-skill-artifact:
+    name: Build skill artifact
+    needs: gate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build uploadable skill zip
+        run: python3 scripts/build_skill_zip.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jira-card-skill
+          path: dist/jira-card.zip
+          if-no-files-found: error
+          retention-days: 90
