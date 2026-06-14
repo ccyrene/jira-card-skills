@@ -1,0 +1,42 @@
+{
+  "site": "https://your-org.atlassian.net",
+  "cloudId": "00000000-0000-0000-0000-000000000000",
+  "project": {
+    "key": "PROJ",
+    "id": "10000",
+    "name": "Example Project"
+  },
+  "board": { "id": 1, "suffix": "TEAM" },
+  "epicParent": "PROJ-1",
+  "assignee": "currentUser",
+  "issueType": { "name": "Task", "id": "10071" },
+  "fields": {
+    "storyPoints": "customfield_10016",
+    "sprint": "customfield_10020",
+    "team": "customfield_10001",
+    "dueDate": "duedate"
+  },
+  "teamValue": "00000000-0000-0000-0000-000000000000",
+  "createDefaults": {
+    "priority": { "name": "Medium" },
+    "customfield_10101": { "id": "10001" },
+    "customfield_10102": { "id": "10011" },
+    "customfield_10103": { "id": "10021" }
+  },
+  "transitions": { "toDo": "11", "inProgress": "21", "done": "31" },
+  "conventions": {
+    "sprintNaming": "YY-MM{A|B} TEAM",
+    "storyPoints": { "min": 0, "max": 3, "granularity": 0.125, "hoursPerDay": 8, "default": 1 },
+    "calendar": {
+      "workdays": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+      "holidays": ["2026-05-04"],
+      "workingHolidays": ["2026-05-01"],
+      "askWhenUnsure": true
+    },
+    "summaryStyle": "Natural Thai/English mix; technical terms stay English. Vary the lead verb across a batch (fix, harden, ขึ้น, ทำ, สร้าง, ปิด). Use em-dash — or parens (...) for clarification, not a colon-then-list. No templated 'ทำ X: Y, Z' openings."
+  },
+  "scope": {
+    "featureDocs": "FEATURE_DOCS.md",
+    "todoList": "to_do_list.md"
+  }
+}

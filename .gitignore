@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+*.log
+
+# Per-target-repo configs are written into THOSE repos' .claude/ dirs,
+# never here. Ignore any stray local config left in this repo during testing.
+/.claude/jira-config.json

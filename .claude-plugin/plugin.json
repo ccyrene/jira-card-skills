@@ -1,0 +1,11 @@
+{
+  "name": "jira-card-skills",
+  "version": "0.3.0",
+  "description": "One-command Jira card workflow for Claude Code — /jira-card creates a single well-formed card from a sentence (sprint/board/due date/points/priority from natural language + per-repo config, asking only when unclear), and also routes to backfill (cards from git commits), implement (pick up backlog & code), browse, setup (auto-discovered config), and list (show every command). No hardcoded instance IDs; ships generic conventions as the default profile.",
+  "author": "Example Org",
+  "homepage": "https://github.com/ccyrene/jira-card-skills",
+  "keywords": ["jira", "atlassian", "skills", "claude-code"],
+  "skills": [
+    "./skills/jira-card"
+  ]
+}
