@@ -1,6 +1,10 @@
 .DS_Store
 node_modules/
 *.log
+__pycache__/
+
+# Built skill artifact (produced by scripts/build_skill_zip.py and CI)
+dist/
 
 # Per-target-repo configs are written into THOSE repos' .claude/ dirs,
 # never here. Ignore any stray local config left in this repo during testing.
